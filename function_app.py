@@ -16,9 +16,9 @@ from concurrent.futures import ThreadPoolExecutor
 app = func.FunctionApp(http_auth_level=func.AuthLevel.FUNCTION)
 
 # HTTP starter function to initiate the durable function
-@app.route(route="http_trigger_arvix_rss", methods=["POST"])
+@app.route(route="http_trigger_arxiv_rss", methods=["POST"])
 @app.durable_client_input(client_name="client")
-async def http_trigger_arvix_rss(req: func.HttpRequest, client) -> func.HttpResponse:
+async def http_trigger_arxiv_rss(req: func.HttpRequest, client) -> func.HttpResponse:
     logging.info('HTTP trigger function received a request.')
 
     try:
@@ -278,10 +278,12 @@ def parse_and_store_articles(rss_content: str, process_date: str, category: str)
             if not identifier:
                 continue
             
-            # Extract DOI from arxiv:DOI element (arXiv-specific namespace)
+            # Extract DOI from arxiv:DOI element
             doi = None
             if hasattr(entry, 'arxiv_doi') and entry.arxiv_doi:
                 doi = entry.arxiv_doi
+            elif hasattr(entry, 'doi') and entry.doi:
+                doi = entry.doi
             
             # Extract creator from dc:creator (Dublin Core namespace)
             creator = None

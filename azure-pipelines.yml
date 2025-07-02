@@ -40,6 +40,6 @@ steps:
     azureSubscription: "DailyTechDevOps"
     appType: functionAppLinux
     isFlexConsumption: true
-    appName: "dailytech-DailyTech-f028d3c2-cabd-4ca7-bec9-74fb78567cbb"
+    appName: "dailytechfuncapp"
     package: $(System.ArtifactsDirectory)/**/*.zip
     deploymentMethod: 'auto' # 'auto' | 'zipDeploy' | 'runFromPackage'. Required. Deployment method. Default: auto.

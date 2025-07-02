@@ -41,5 +41,5 @@ steps:
     appType: functionAppLinux
     isFlexConsumption: true
     appName: "dailytechfuncapp"
-    package: $(System.ArtifactsDirectory)/**/*.zip
+    package: '$(System.DefaultWorkingDirectory)/**/*.zip'
     deploymentMethod: 'auto' # 'auto' | 'zipDeploy' | 'runFromPackage'. Required. Deployment method. Default: auto.

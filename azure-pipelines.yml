@@ -34,3 +34,12 @@ steps:
   inputs:
     PathtoPublish: '$(System.DefaultWorkingDirectory)/build$(Build.BuildId).zip'
     artifactName: 'drop'
+
+- task: AzureFunctionApp@2 # Add this at the end of your file
+  inputs:
+    azureSubscription: "Visual Studio Enterprise Subscription"
+    appType: functionAppLinux
+    isFlexConsumption: true
+    appName: "dailytech-DailyTech-f028d3c2-cabd-4ca7-bec9-74fb78567cbb"
+    package: $(System.ArtifactsDirectory)/**/*.zip
+    deploymentMethod: 'auto' # 'auto' | 'zipDeploy' | 'runFromPackage'. Required. Deployment method. Default: auto.

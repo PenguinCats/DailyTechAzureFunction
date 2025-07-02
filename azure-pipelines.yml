@@ -37,7 +37,7 @@ steps:
 
 - task: AzureFunctionApp@2 # Add this at the end of your file
   inputs:
-    azureSubscription: "Visual Studio Enterprise Subscription"
+    azureSubscription: "DailyTechDevOps"
     appType: functionAppLinux
     isFlexConsumption: true
     appName: "dailytech-DailyTech-f028d3c2-cabd-4ca7-bec9-74fb78567cbb"

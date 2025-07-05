@@ -124,7 +124,6 @@ async def simplify_article_description(req: func.HttpRequest) -> func.HttpRespon
         return func.HttpResponse(
             json.dumps({
                 "status": "success",
-                "original_description": description,
                 "simplified_description": simplified_description,
                 "article_metadata": article_metadata
             }, ensure_ascii=False),
@@ -163,8 +162,8 @@ def read_article_metadata_from_url(file_url: str) -> Optional[dict]:
             return None
         
         # Extract container name and blob path
-        container_name = url_parts[2]
-        blob_name = '/'.join(url_parts[3:])
+        container_name = url_parts[1]
+        blob_name = '/'.join(url_parts[2:])
         
         logging.info(f"Reading from container: {container_name}, blob: {blob_name}")
         

@@ -9,3 +9,4 @@ azure-identity
 feedparser
 requests
 aiohttp
+openai

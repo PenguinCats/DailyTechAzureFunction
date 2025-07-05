@@ -23,6 +23,7 @@ import logging
 from blueprints.arxiv.functions import arxiv_bp
 from blueprints.news.functions import news_bp
 from blueprints.utils.functions import utils_bp
+from blueprints.abstractParse.functions import abstract_parse_bp
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -34,6 +35,7 @@ app = func.FunctionApp(http_auth_level=func.AuthLevel.FUNCTION)
 app.register_blueprint(arxiv_bp)
 app.register_blueprint(news_bp)
 app.register_blueprint(utils_bp)
+app.register_blueprint(abstract_parse_bp)
 
 # Root endpoint for API information
 @app.route(route="", methods=["GET"])
@@ -55,13 +57,15 @@ async def api_info(req: func.HttpRequest) -> func.HttpResponse:
                 "description": "arXiv RSS processing with batch upload (your original logic preserved)",
                 "endpoints": [
                     "POST /api/http_trigger_arxiv_rss - Start arXiv RSS processing",
-                    "GET /api/arxiv/status/{instanceId} - Get processing status"
+                    "GET /api/arxiv/status/{instanceId} - Get processing status",
+                    "POST /api/arxiv/mock/create - Create mock article for testing"
                 ],
                 "features": [
                     "Batch article upload with configurable concurrency",
                     "Async processing with proper error handling",
                     "RSS parsing and metadata extraction",
-                    "Azure Blob Storage integration"
+                    "Azure Blob Storage integration",
+                    "Mock article creation for testing abstractParse"
                 ]
             },
             "news": {
@@ -79,6 +83,20 @@ async def api_info(req: func.HttpRequest) -> func.HttpResponse:
                     "GET /api/utils/config - Configuration info",
                     "GET /api/utils/storage/containers - List storage containers",
                     "GET /api/utils/storage/container/{name}/blobs - List blobs in container"
+                ]
+            },
+            "abstractParse": {
+                "description": "Simplifies academic article descriptions using Azure OpenAI",
+                "endpoints": [
+                    "POST /api/abstract/simplify - Simplify article description into easy-to-understand language"
+                ],
+                "input_format": {
+                    "file_url": "Full URL to blob containing article metadata JSON"
+                },
+                "features": [
+                    "Reads article metadata from Azure Blob Storage",
+                    "Uses Azure OpenAI to translate complex academic language",
+                    "Returns both original and simplified descriptions"
                 ]
             }
         },
